@@ -41,7 +41,7 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC))==true) {
 }
 $td.="<tr><td colspan=\"2\"><input type=\"submit\"></td></tr></form>";
 
-$sql="select entry_time,note from messages_notes WHERE message_id={$message_id} ORDER BY entry_time";
+$sql="select entry_time,note from messages_notes WHERE message_id={$message_id} ORDER BY entry_time DESC";
 $res=$db->query($sql);
 while(($row=$res->fetchRow())==true) {
 	$td2.="<tr><td colspan=\"2\"><b>{$row[0]}</b><hr>{$row[1]}<hr></td></tr>\n";
@@ -54,26 +54,32 @@ while(($row=$res->fetchRow())==true) {
 }
 
 ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <title>Working Ticket</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="css/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <a href="index.php">Home</a> | <a target="_float" href="audioPlayer.php?message_id=<?php echo $message_id;?>">Play Audio</a>
-<table border="0" cellpadding="10" cellspacing="0"><tr><td valign="top">
+<div class="work-message">
 <table cellpadding="5" cellspacing="0" border="1">
 <?php echo $td; ?>
-</table></td>
+</table>
+</div>
 
-<td valign="top"><table cellpadding="5" cellspacing="0" border="1"> <?php echo $td3; ?> </table></td></tr>
+<div class="work-logs">
+<table cellpadding="5" cellspacing="0" border="1"> <?php echo $td3; ?> </table>
+</div>
 
-<tr><td colspan="2">
-<table width="100%" cellpadding="5" cellspacing="0" border="1">
+<div class="work-notes">
+<table cellpadding="5" cellspacing="0" border="1">
 <tr><td>Notes:</td></tr>
 <tr><td><form method="post" action="addnote.php"><input type="hidden" name="message_id" value="<?php echo $message_id; ?>"><textarea name="mynote" rows="5" cols="80"></textarea><br><input type="submit"></form></td></tr>
 <?php echo $td2; ?>
 </table>
-</td></tr></table>
+</div>
 
 
 </body>

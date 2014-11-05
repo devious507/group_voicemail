@@ -44,6 +44,10 @@ $res=$db->query($sql);
 $sql="UPDATE messages SET ".implode(",",$pairs)." WHERE message_id={$message_id}";
 $db->query($sql);
 if($myNote != '') {
+	$myName=getName($_COOKIE['voicemail-userid']);
+	$newNote="--".$myName."--<br>&nbsp;<br>".$myNote;
+	$myNote=$newNote;
+	unset($newNote);
 	$sql="INSERT INTO messages_notes (message_id,note) VALUES ({$message_id},'$myNote')";
 	$db->query($sql);
 }

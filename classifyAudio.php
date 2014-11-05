@@ -32,6 +32,7 @@ $callTypeSelector=getCallType($data['call_type_id']);
 
 
 ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <title>Classifier</title>
@@ -52,8 +53,12 @@ $callTypeSelector=getCallType($data['call_type_id']);
       });
     });
   </script>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Refresh" content="<?php echo $refresh_interval;?>;URL=index.php?lastmess=<?php echo $max;?>">
+<link href="css/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+  <div class="jplayer-container">
   <div id="jquery_jplayer_1" class="jp-jplayer"></div>
   <div id="jp_container_1" class="jp-audio">
     <div class="jp-type-single">
@@ -94,8 +99,11 @@ $callTypeSelector=getCallType($data['call_type_id']);
       </div>
     </div>
   </div>
+<br>&nbsp;<br>
+<a href="index.php">Home</a>
+</div>
 
-<a href="dumpCookies.php">Dump Cookies</a><br>
+<div class="classifyAudio">
 <form method="post" action="updateRecord.php">
 <table cellpadding="5" cellspacing="0" border="1">
 <tr><td>Message ID</td><td><input type="hidden" name="message_id" value="<?php echo $message_id;?>"><?php echo $message_id; ?></td></tr>
@@ -111,5 +119,6 @@ $callTypeSelector=getCallType($data['call_type_id']);
 <tr><td colspan="2"><textarea name="newnote" rows="5" cols="80"></textarea></td></tr>
 <tr><td colspan="2"><input type="hidden" name="status_id" value="1"><input type="hidden" name="current_owner" value="<?php echo $_COOKIE['voicemail-userid']; ?>"><input type="submit"></td></tr>
 </form>
+</div>
 </body>
 </html>
