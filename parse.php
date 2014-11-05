@@ -51,7 +51,9 @@ foreach($structure->parts as $x) {
 		$sql="INSERT INTO messages_logfile (message_id,action_description) values ({$max},'SYSTEM created ticket with audio')";
 		$db->query($sql);
 		$db->disconnect();
-		JabberMessage();
+		if(!is_dev) {
+			JabberMessage();
+		}
 		exit();
 	}
 }
