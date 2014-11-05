@@ -1,9 +1,12 @@
 <?php
 
-if((preg_match("/voicemail-dev/",$_SERVER['SCRIPT_FILENAME']) || preg_match($_SERVER['PWD'])) {
+if( (preg_match("/voicemail-dev/",$_SERVER['SCRIPT_FILENAME'])) || (preg_match("/voicemail-dev/",$_SERVER['PWD'])))
+{
 	DEFINE('dsn','pgsql://paulo@localhost/voicemail-dev');
 	DEFINE('is_devel',true);
-} else {
+}
+else
+{
 	DEFINE('dsn','pgsql://paulo@localhost/voicemail');
 	DEFINE('is_devel',false);
 }
