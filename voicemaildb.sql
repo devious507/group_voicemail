@@ -16,6 +16,7 @@ INSERT INTO call_types (call_type) VALUES ('INET Troubleshooting');
 INSERT INTO call_types (call_type) VALUES ('PHONE Troubleshooting');
 INSERT INTO call_types (call_type) VALUES ('New Account');
 INSERT INTO call_types (call_type) VALUES ('Add / Remove Services');
+INSERT INTO call_types (call_type) VALUES ('GUESTSUITE');
 
 CREATE TABLE users (
 	user_id serial unique not null,
@@ -30,7 +31,7 @@ INSERT INTO users (username,password,email,user_id) VALUES ('SYSTEM','lskdjflskd
 INSERT INTO users (username,password,email,admin) VALUES ('paulo','sbob','paulo@visionsystems.tv',true);
 INSERT INTO users (username,password,email) VALUES ('paigeh','tor50','paigeh@visionsystems.tv');
 INSERT INTO users (username,password,email) VALUES ('robbiew','poohbear','robbiew@visionsystems.tv');
-INSERT INTO users (username,password,email) VALUES ('karam','Balloon','karam@visionsystems.tv');
+INSERT INTO users (username,password,email) VALUES ('karam','balloon','karam@visionsystems.tv');
 INSERT INTO users (username,password,email,admin) VALUES ('darlab','tate2','darlab@visionsystems.tv',true);
 INSERT INTO users (username,password,email,admin) VALUES ('daveb','daytime','daveb@visionsystems.tv',true);
 INSERT INTO users (username,password,email) VALUES ('johnw','outcast47','johnw@visionsystems.tv');

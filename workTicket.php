@@ -24,7 +24,7 @@ if($count < 2) {
 	$msg="{$username} listened to the voicemail for the first time";
 	$sql="INSERT INTO messages_logfile (message_id,action_description) VALUES ({$message_id},'{$msg}')";
 	$db->query($sql);
-	$sql="UPDATE messages SET current_owner={$_COOKIE['voicemail-userid']} WHERE message_id={$message_id}";
+	$sql="UPDATE messages SET current_owner={$_COOKIE['voicemail-userid']},status_id=1 WHERE message_id={$message_id}";
 	$db->query($sql);
 }
 
