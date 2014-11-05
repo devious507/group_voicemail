@@ -4,7 +4,11 @@ require_once("Mail/mimeDecode.php");
 require_once("db.php");
 
 
-$filedir='/home/paulo/public_html/dashboard/voicemail/audio_files';
+if(is_devel) {
+	$filedir='/home/paulo/public_html/dashboard/voicemail-dev/audio_files';
+} else {
+	$filedir='/home/paulo/public_html/dashboard/voicemail/audio_files';
+}
 
 $message='';
 
