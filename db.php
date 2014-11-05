@@ -34,7 +34,7 @@ function txtBox($name,$value,$type="text") {
 function phpAuth() {
 	global $_SERVER;
 	if (!isset($_SERVER['PHP_AUTH_USER'])) {
-		    header('WWW-Authenticate: Basic realm="My Realm"');
+		    header('WWW-Authenticate: Basic realm="Voicemail Access"');
 		        header('HTTP/1.0 401 Unauthorized');
 		        echo 'Text to send if user hits Cancel button';
 			exit;

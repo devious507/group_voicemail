@@ -2,6 +2,7 @@
 
 require_once("Mail/mimeDecode.php");
 require_once("db.php");
+require_once("jabber.php");
 
 
 if(is_devel) {
@@ -50,11 +51,10 @@ foreach($structure->parts as $x) {
 		$sql="INSERT INTO messages_logfile (message_id,action_description) values ({$max},'SYSTEM created ticket with audio')";
 		$db->query($sql);
 		$db->disconnect();
+		JabberMessage();
 		exit();
 	}
 }
-
-
 
 
 ?>
