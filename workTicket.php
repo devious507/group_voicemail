@@ -10,6 +10,32 @@ if(!isset($_GET['message_id'])) {
 }
 
 $db=connect();
+
+$sql="select username FROM users WHERE user_id={$_COOKIE['voicemail-userid']}";
+$res=$db->query($sql);
+$row=$res->fetchRow();
+$username=$row[0];
+
+$sql="SELECT count(*) FROM messages_logfile WHERE message_id={$message_id}";
+$res=$db->query($sql);
+$row=$res->fetchRow();
+$count=$row[0];
+if($count < 2) {
+	$msg="{$username} listened to the voicemail for the first time";
+	$sql="INSERT INTO messages_logfile (message_id,action_description) VALUES ({$message_id},'{$msg}')";
+	$db->query($sql);
+}
+
+$sql="SELECT filename FROM messages WHERE message_id='{$message_id}'";
+$res=$db->query($sql);
+$row=$res->fetchRow();
+$tmpfile=$row[0];
+$tmp=preg_split("/\//",$tmpfile);
+$filename=$tmp[6]."/".$tmp[7];
+unset($tmpfile);
+unset($tmp);
+
+
 $sql="SELECT * FROM messages WHERE message_id='{$message_id}'";
 $res=$db->query($sql);
 $td='<form method="post" action="updateRecord.php">';
@@ -53,6 +79,8 @@ while(($row=$res->fetchRow())==true) {
 	$td3.="<tr><td>{$row[0]}</td><td>{$row[1]}</td></tr>\n";
 }
 
+$player_html=file_get_contents("player.html");
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -60,6 +88,24 @@ while(($row=$res->fetchRow())==true) {
 <title>Working Ticket</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link href="css/index.css" rel="stylesheet" type="text/css">
+<link type="text/css" href="/voicemail/skins/jplayer.blue.monday.css" rel="stylesheet" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/voicemail/js/jquery.jplayer.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#jquery_jplayer_1").jPlayer({
+        ready: function () {
+          $(this).jPlayer("setMedia", {
+                  title: "Voicemail # <?php echo $message_id; ?>",
+                wav: "<?php echo $filename; ?>"
+          });
+        },
+        swfPath: "/voicemail/js",
+        supplied: "wav"
+      });
+    });
+  </script>
+
 </head>
 <body>
 <a href="index.php">Home</a> | <a target="_float" href="audioPlayer.php?message_id=<?php echo $message_id;?>">Play Audio</a>
@@ -69,6 +115,9 @@ while(($row=$res->fetchRow())==true) {
 </table>
 </div>
 
+<div class="jsplayerWorkTicket">
+<?php echo $player_html; ?>
+</div>
 <div class="work-logs">
 <table cellpadding="5" cellspacing="0" border="1"> <?php echo $td3; ?> </table>
 </div>

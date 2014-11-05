@@ -19,7 +19,7 @@ if(!isset($_GET['lastmess'])) {
 $sql="SELECT message_id,message_create from messages WHERE status_id=0 ORDER BY status_id ASC,message_create ASC";
 $res=$db->query($sql);
 while(($row=$res->fetchRow())==true) {
-	$url="<a href=\"classifyAudio.php?message_id={$row[0]}\">{$row[0]}</a>";
+	$url="<a href=\"workTicket.php?message_id={$row[0]}\">{$row[0]}</a>";
 	$td.="<tr><td>{$url}</td><td>{$row[1]}</td></tr>\n";
 }
 

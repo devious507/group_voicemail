@@ -44,7 +44,7 @@ div.work-logs{
 }
 div.work-notes{
 	position: fixed;
-	top: 30px;
+	top: 155px;
 	left: 20px;
 }
 div.work-message {
@@ -56,4 +56,9 @@ div.refreshCountdown {
 	position: fixed;
 	top: 5px;
 	left: 5px;
+}
+div.jsplayerWorkTicket {
+	position: fixed;
+	top: 30px;
+	left: 20px;
 }
