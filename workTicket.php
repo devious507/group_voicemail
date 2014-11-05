@@ -24,6 +24,8 @@ if($count < 2) {
 	$msg="{$username} listened to the voicemail for the first time";
 	$sql="INSERT INTO messages_logfile (message_id,action_description) VALUES ({$message_id},'{$msg}')";
 	$db->query($sql);
+	$sql="UPDATE messages SET current_owner={$_COOKIE['voicemail-userid']} WHERE message_id={$message_id}";
+	$db->query($sql);
 }
 
 $sql="SELECT filename FROM messages WHERE message_id='{$message_id}'";
@@ -108,7 +110,7 @@ $player_html=file_get_contents("player.html");
 
 </head>
 <body>
-<a href="index.php">Home</a> | <a target="_float" href="audioPlayer.php?message_id=<?php echo $message_id;?>">Play Audio</a>
+<a href="index.php">Home</a>
 <div class="work-message">
 <table cellpadding="5" cellspacing="0" border="1">
 <?php echo $td; ?>
