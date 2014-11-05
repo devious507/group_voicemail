@@ -1,7 +1,7 @@
 <?php
 
 require_once("db.php");
-$refresh_interval=20;
+$refresh_interval=120;
 
 phpAuth();
 
