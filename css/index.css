@@ -40,18 +40,22 @@ div.jplayer-container {
 div.work-logs{
 	position: fixed;
 	top: 410px;
-	left: 700px;
+	left: 730px;
+	overflow: scroll;
+	height: 350px;
 }
 div.work-notes{
 	position: fixed;
 	top: 155px;
 	left: 20px;
-	width: 480px;
+	overflow: scroll;
+	width: 700px;
+	height: 610px;
 }
 div.work-message {
 	position: fixed;
 	top: 30px;
-	left: 700px;
+	left: 730px;
 }
 div.refreshCountdown {
 	position: fixed;

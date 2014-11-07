@@ -83,8 +83,9 @@ while(($row=$res->fetchRow())==true) {
 
 $player_html=file_get_contents("player.html");
 
+//<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html">
 <html>
 <head>
 <title>Working Ticket</title>
