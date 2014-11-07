@@ -53,6 +53,7 @@ if(isset($_GET['lastmess']) && ($_GET['lastmess'] < $max)) {
 <title>Messsages</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta http-equiv="Refresh" content="<?php echo $refresh_interval;?>;URL=index.php?lastmess=<?php echo $max;?>">
+<link href="css/normalize.css" rel="stylesheet" type="text/css">
 <link href="css/index.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 	var startTime;

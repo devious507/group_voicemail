@@ -39,18 +39,19 @@ div.jplayer-container {
 }
 div.work-logs{
 	position: fixed;
-	top: 400px;
-	left: 650px;
+	top: 410px;
+	left: 700px;
 }
 div.work-notes{
 	position: fixed;
 	top: 155px;
 	left: 20px;
+	width: 480px;
 }
 div.work-message {
 	position: fixed;
 	top: 30px;
-	left: 650px;
+	left: 700px;
 }
 div.refreshCountdown {
 	position: fixed;
@@ -61,4 +62,7 @@ div.jsplayerWorkTicket {
 	position: fixed;
 	top: 30px;
 	left: 20px;
+}
+td {
+	padding: 5px;
 }

@@ -89,6 +89,7 @@ $player_html=file_get_contents("player.html");
 <head>
 <title>Working Ticket</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="css/normalize.css" rel="stylesheet" type="text/css">
 <link href="css/index.css" rel="stylesheet" type="text/css">
 <link type="text/css" href="/voicemail/skins/jplayer.blue.monday.css" rel="stylesheet" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
