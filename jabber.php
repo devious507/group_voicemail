@@ -1,5 +1,18 @@
 <?php
 
+function MailMessage() {
+	if(is_devel) {
+		$dir="voicemail-dev";
+	} else {
+		$dir="voicemail";
+	}
+	$now=date("H:i:s m/d/Y");
+	$mailto="darla@visionsystems.tv";
+	$subject="New Voicemail Message Arrived at {$now} see http://dashboard.visionsystems.tv/{$dir}";
+	mail($mailto,$subject,$subject);
+
+}
+
 function JabberMessage() {
 	require_once("classes/class.jabber.php");
 	if(is_devel) {

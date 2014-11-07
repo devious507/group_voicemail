@@ -54,6 +54,7 @@ foreach($structure->parts as $x) {
 		if(is_devel) {
 			exit();
 		} else {
+			MailMessage();
 			JabberMessage();
 			exit();
 		}
