@@ -59,23 +59,12 @@ function phpAuth() {
 function getStatusID($active) {
 	global $_COOKIE;
 	$myIDNUM=$_COOKIE['voicemail-userid'];
-	$name=getName($myIDNUM);
-	switch($name) {
-	case "paulo":
-	case "darlab":
-	case "daveb":
-		$admin=true;
-		break;
-	default:
-		$admin=false;
-		break;
-	}
+	$sql="SELECT max_status_id FROM users WHERE user_id={$myIDNUM}";
 	$db=connect();
-	if($admin) {
-		$sql="select * FROM status WHERE status_id > 0";
-	} else {
-		$sql="select * FROM status WHERE status_id > 0 AND status_id < 4";
-	}
+	$res=$db->query($sql);
+	$row=$res->fetchRow();
+	$max_status_id=$row[0];
+	$sql="select * FROM status WHERE status_id > 0 AND status_id <= {$max_status_id}";
 	$res=$db->query($sql);
 	$rv="<select name=\"status_id\">\n";
 	while(($row=$res->fetchRow())==true) {

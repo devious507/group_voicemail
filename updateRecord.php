@@ -30,9 +30,9 @@ $res=$db->query($sql);
 $row=$res->fetchRow();
 $username=$row[0];
 if($_POST['status_id'] == 2) {
-	$msg=$username." closed the call";
+	$msg=$username." completed the call";
 } elseif($_POST['status_id'] == 3) {
-	$msg=$username." re-opened the call";
+	$msg=$username." closed the call";
 } elseif($_POST['status_id'] == 4) {
 	$msg=$username." finalized the call";
 } else {
@@ -52,6 +52,9 @@ if($myNote != '') {
 	$db->query($sql);
 }
 if($_POST['status_id'] == 2) {
+	header("Location: index.php");
+	exit();
+} elseif($_POST['status_id'] == 3) {
 	header("Location: index.php");
 	exit();
 } elseif($_POST['status_id'] == 4) {

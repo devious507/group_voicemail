@@ -32,6 +32,8 @@ while(($row=$res->fetchRow())==true) {
 	$url="<a href=\"workTicket.php?message_id={$row[0]}\">{$row[0]}</a>";
 	if($row[2] == "CLOSED") {
 		$myClass="strike";
+	} elseif($row[2] == 'COMPLETED') {
+		$myClass='completed';
 	} else {
 		$myClass="plain";
 	}

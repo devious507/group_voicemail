@@ -12,6 +12,10 @@ td {
 
 td.strike {
 	text-decoration: line-through;
+	background: yellow;
+}
+td.completed {
+	text-decoration: line-through;
 }
 td.plain {
 	text-decoration: none;
