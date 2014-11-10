@@ -39,10 +39,10 @@ div.jplayer-container {
 }
 div.work-logs{
 	position: fixed;
-	top: 410px;
+	top: 450px;
 	left: 730px;
 	overflow: scroll;
-	height: 350px;
+	height: 310px;
 }
 div.work-notes{
 	position: fixed;
