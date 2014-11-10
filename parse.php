@@ -41,7 +41,9 @@ foreach($structure->parts as $x) {
 		$filename=$newname;
 		unset($newname);
 		chmod($filename,444);
-		$sql="INSERT INTO messages (filename) values ('{$filename}')";
+		$cmd="/usr/bin/soxi -D {$filename}";
+		$len=intval(system($cmd))+1;
+		$sql="INSERT INTO messages (filename,length) values ('{$filename}',$len)";
 		$db=connect();
 		$db->query($sql);
 		$sql="SELECT max(message_id) FROM messages";

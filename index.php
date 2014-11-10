@@ -16,15 +16,17 @@ if(!isset($_GET['lastmess'])) {
 	header("Location: index.php?lastmess={$max}");
 	exit();
 }
-$sql="SELECT message_id,message_create from messages WHERE status_id=0 ORDER BY status_id ASC,message_create ASC";
+$sql="SELECT message_id,message_create,length from messages WHERE status_id=0 ORDER BY status_id ASC,message_create ASC";
 $res=$db->query($sql);
 while(($row=$res->fetchRow())==true) {
 	$url="<a href=\"workTicket.php?message_id={$row[0]}\">{$row[0]}</a>";
-	$td.="<tr><td>{$url}</td><td>{$row[1]}</td></tr>\n";
+	$td.="<tr><td>{$url}</td><td>{$row[1]}</td><td>{$row[2]}</td></tr>\n";
 }
 
-$sql="SELECT a.message_id,a.message_create,a.status,c.call_type FROM (SELECT m.call_type_id,m.message_id,m.message_create,s.status FROM messages AS m LEFT OUTER JOIN status AS s ON m.status_id=s.status_id WHERE m.status_id>0 AND m.status_id < 4 ORDER BY m.status_id ASC,m.message_create ASC) as a LEFT OUTER JOIN call_types AS c ON a.call_type_id=c.call_type_id";
 $sql="SELECT b.message_id,b.message_create,b.status,b.call_type,u.username FROM (SELECT a.message_id,a.message_create,a.status,c.call_type,a.current_owner FROM (SELECT m.call_type_id,m.message_id,m.message_create,s.status,m.current_owner FROM messages AS m LEFT OUTER JOIN status AS s ON m.status_id=s.status_id WHERE m.status_id>0 AND m.status_id < 4 ORDER BY m.status_id ASC,m.message_create ASC) as a LEFT OUTER JOIN call_types AS c ON a.call_type_id=c.call_type_id) as b LEFT OUTER JOIN users AS u ON b.current_owner=u.user_id";
+
+$sql=" SELECT b.message_id,b.message_create,b.status,b.call_type,u.username,b.length FROM (SELECT a.message_id,a.message_create,a.status,c.call_type,a.current_owner,a.length FROM (SELECT m.call_type_id,m.message_id,m.message_create,s.status,m.current_owner,m.length FROM messages AS m LEFT OUTER JOIN status AS s ON m.status_id=s.status_id WHERE m.status_id>0 AND m.status_id < 4 ORDER BY m.status_id ASC,m.message_create ASC) as a LEFT OUTER JOIN call_types AS c ON a.call_type_id=c.call_type_id) as b LEFT OUTER JOIN users AS u ON b.current_owner=u.user_id";
+
 $res=$db->query($sql);
 while(($row=$res->fetchRow())==true) {
 	$url="<a href=\"workTicket.php?message_id={$row[0]}\">{$row[0]}</a>";
@@ -33,7 +35,7 @@ while(($row=$res->fetchRow())==true) {
 	} else {
 		$myClass="plain";
 	}
-	$td2.="<tr><td class=\"{$myClass}\">{$url}</td><td class=\"{$myClass}\">{$row[1]}</td><td class=\"{$myClass}\">{$row[2]}</td><td class=\"{$myClass}\">{$row[3]}</td><td class=\"{$myClass}\">{$row[4]}</td></tr>\n";
+	$td2.="<tr><td class=\"{$myClass}\">{$url}</td><td class=\"{$myClass}\">{$row[1]}</td><td class=\"{$myClass}\">{$row[2]}</td><td class=\"{$myClass}\">{$row[3]}</td><td class=\"{$myClass}\">{$row[4]}</td><td class=\"{$myClass}\">{$row[5]}</td></tr>\n";
 }
 
 $db->disconnect();
@@ -75,16 +77,16 @@ setInterval(function () {
 
 <div class="unlistened">
 <table cellpadding="5" cellspacing="0" border="1">
-<tr><td colspan="2" align="center">Newly Arrived</td></tr>
-<tr><td>Msg #</td><td>Arrived</td></tr>
+<tr><td colspan="3" align="center">Newly Arrived</td></tr>
+<tr><td>Msg #</td><td>Arrived</td><td>Len</td></tr>
 <?php echo $td; ?>
 </table>
 </div>
 
 <div class="listened">
 <table cellpadding="5" cellspacing="0" border="1">
-<tr><td colspan="5" align="center">Initial Processing Done</td></tr>
-<tr><td>Msg #</td><td>Arrived</td><td>Status</td><td>Call Type</td><td>Owner</td></tr>
+<tr><td colspan="6" align="center">Initial Processing Done</td></tr>
+<tr><td>Msg #</td><td>Arrived</td><td>Status</td><td>Call Type</td><td>Owner</td><td>Len</td></tr>
 <?php echo $td2; ?>
 </table>
 </div>

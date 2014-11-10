@@ -51,6 +51,7 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC))==true) {
 			break;
 		case "message_create":
 		case "filename":
+		case "length":
 			break;
 		case "status_id":
 			$td.="<tr><td>{$k}</td><td>".getStatusID($v)."</td></tr>";
