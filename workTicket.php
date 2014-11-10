@@ -3,6 +3,15 @@
 require_once("db.php");
 phpAuth();
 
+require_once 'Mobile_Detect.php';
+$detect = new Mobile_Detect;
+
+if ( $detect->isMobile() ) {
+	$styleSheet="<link href=\"css/mobile.css\" rel=\"stylesheet\" type=\"text/css\">";
+} else {
+	$styleSheet="<link href=\"css/index.css\" rel=\"stylesheet\" type=\"text/css\">";
+}
+
 if(!isset($_GET['message_id'])) {
 	header("Location: index.php");
 } else {
@@ -92,7 +101,7 @@ $player_html=file_get_contents("player.html");
 <title>Working Ticket</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link href="css/normalize.css" rel="stylesheet" type="text/css">
-<link href="css/index.css" rel="stylesheet" type="text/css">
+<?php echo $styleSheet; ?>
 <link type="text/css" href="/voicemail/skins/jplayer.blue.monday.css" rel="stylesheet" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="/voicemail/js/jquery.jplayer.min.js"></script>
@@ -114,15 +123,17 @@ $player_html=file_get_contents("player.html");
 </head>
 <body>
 <a href="index.php">Home</a>
+
+<div class="jsplayerWorkTicket">
+<?php echo $player_html; ?>
+</div>
+
 <div class="work-message">
 <table cellpadding="5" cellspacing="0" border="1">
 <?php echo $td; ?>
 </table>
 </div>
 
-<div class="jsplayerWorkTicket">
-<?php echo $player_html; ?>
-</div>
 <div class="work-logs">
 <table cellpadding="5" cellspacing="0" border="1"> <?php echo $td3; ?> </table>
 </div>

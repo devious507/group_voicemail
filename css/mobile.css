@@ -1,0 +1,50 @@
+body {
+	font-family: Arial,Helvetica,sans-serif;
+	background: #dddddd;
+}
+td {
+	font-family: Arial,Helvetica,sans-serif;
+	background: #eeeeee;
+	text-align: left;
+	vertical-align: top;
+}
+
+
+td.strike {
+	text-decoration: line-through;
+}
+td.plain {
+	text-decoration: none;
+}
+
+div.unlistened {
+	top: 30px;
+	left: 10px;
+}
+div.listened {
+	top: 30px;
+	left: 350px;
+}
+div.classifyAudio {
+	top: 20px;
+	left: 450px;
+}
+div.jplayer-container {
+	top: 20px;
+	left: 20px;
+}
+div.work-logs{
+}
+div.work-notes{
+}
+div.work-message {
+}
+div.refreshCountdown {
+}
+div.jsplayerWorkTicket {
+	top: 30px;
+	left: 20px;
+}
+td {
+	padding: 5px;
+}
