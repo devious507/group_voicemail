@@ -27,7 +27,19 @@ $params['decode_headers'] = true;
 $parser = new Mail_mimeDecode($message);
 
 $structure = $parser->decode($params);
+//var_dump($structure->parts[0]->parts);
 
+$txt='juk';
+
+//foreach($structure->parts[0]->parts as $x) {
+foreach($structure->parts as $x) {
+	if(preg_match("/^text\/plain/",$x->headers['content-type'])) {
+		$txt=$x->body;
+		$txt=preg_replace("/\n/","&nbsp;<br>",$txt);
+		$txt=addslashes($txt);
+	} else {
+	}
+}
 foreach($structure->parts as $x) {
 	print $x->headers['content-type']."\n";
 	if(preg_match("/^audio\/x-wav/",$x->headers['content-type'])) {
@@ -50,15 +62,17 @@ foreach($structure->parts as $x) {
 		$res=$db->query($sql);
 		$row=$res->fetchRow();
 		$max=$row[0];
+		$sql="INSERT INTO messages_notes (message_id,note) values ({$max},'{$txt}')";
+		$db->query($sql);
 		$sql="INSERT INTO messages_logfile (message_id,action_description) values ({$max},'SYSTEM created ticket with audio')";
 		$db->query($sql);
 		$db->disconnect();
 		if(is_devel) {
-			exit();
+			//exit();
 		} else {
-			MailMessage();
-			JabberMessage();
-			exit();
+			//MailMessage();
+			//JabberMessage();
+			//exit();
 		}
 	}
 }
