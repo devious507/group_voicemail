@@ -68,11 +68,11 @@ foreach($structure->parts as $x) {
 		$db->query($sql);
 		$db->disconnect();
 		if(is_devel) {
-			//exit();
+			exit();
 		} else {
-			//MailMessage();
-			//JabberMessage();
-			//exit();
+			MailMessage();
+			JabberMessage();
+			exit();
 		}
 	}
 }
