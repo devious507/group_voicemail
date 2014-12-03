@@ -4,6 +4,7 @@ require_once("db.php");
 $refresh_interval=120;
 
 phpAuth();
+$callLogs="<tr><td colspan=\"6\"><a href=\"callLog.php\">Call Log Files</a></td></tr>\n";
 
 $td='';
 $td2='';
@@ -90,6 +91,7 @@ setInterval(function () {
 <tr><td colspan="6" align="center">Initial Processing Done</td></tr>
 <tr><td>Msg #</td><td>Arrived</td><td>Status</td><td>Call Type</td><td>Owner</td><td>Len</td></tr>
 <?php echo $td2; ?>
+<?php echo $callLogs; ?>
 </table>
 </div>
 <?php echo $alarm; ?>
