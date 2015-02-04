@@ -15,8 +15,8 @@ class paulCalendar
 	private $is_leapyear=false;
 
 	function __construct() {
-		$this->setMonth(date('m'));
-		$this->setYear(date('Y'));
+		$this->setMonth(intval(date('m')));
+		$this->setYear(intval(date('Y')));
 	}
 	function setCellSpacing($int) {
 		$this->cellspacing=$int;
@@ -37,6 +37,12 @@ class paulCalendar
 		if($m >0 AND $m<13) {
 			$this->month=$m;
 		}
+	}
+	function dump() {
+		print "<pre>";
+		var_dump($this);
+		print "</pre>";
+		exit();
 	}
 	function setYear($y) {
 		$this->year=$y;

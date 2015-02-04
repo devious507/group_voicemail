@@ -14,6 +14,7 @@ if(isset($_GET['year'])) {
 if(isset($_GET['month'])) {
 	$myCal->setMonth($_GET['month']);
 }
+//$myCal->dump();
 $ctrl=$myCal->output();
 ?>
 <!doctype html>
