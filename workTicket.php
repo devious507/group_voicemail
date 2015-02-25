@@ -16,6 +16,11 @@ if(!isset($_GET['message_id'])) {
 	header("Location: index.php");
 } else {
 	$message_id=$_GET['message_id'];
+	$prev_id=$message_id-1;
+	$next_id=$message_id+1;
+	$prev="<a href=\"workTicket.php?message_id={$prev_id}\">Prev</a>";
+	$next="<a href=\"workTicket.php?message_id={$next_id}\">Next</a>";
+	$prev_next="{$prev} | {$next}";
 }
 
 $db=connect();
@@ -95,7 +100,7 @@ $player_html=file_get_contents("player.html");
 
 //<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 ?>
-<!DOCTYPE html">
+<!DOCTYPE html>
 <html>
 <head>
 <title>Working Ticket</title>
@@ -125,7 +130,12 @@ $player_html=file_get_contents("player.html");
 <a href="index.php">Home</a>
 
 <div class="jsplayerWorkTicket">
-<?php echo $player_html; ?>
+<table widht="100%" cellspacing="0" cellpadding="3" border="1">
+<tr>
+  <td><?php echo $player_html; ?></td>
+  <td><?php echo $prev_next; ?></td>
+</tr>
+</table>
 </div>
 
 <div class="work-message">
