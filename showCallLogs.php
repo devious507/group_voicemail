@@ -33,9 +33,31 @@ if(PEAR::isError($res)) {
 $tbl='';
 $color="dedede";
 while(($row=$res->fetchRow()) == true) {
+	if(strlen($row[1]) == 3) {
+		array_unshift($row,'Out');
+	} else {
+		array_unshift($row,'In');
+	}
 	$tbl.="<tr>";
-	foreach($row as $val) {
-		$tbl.="<td bgcolor=\"{$color}\">{$val}</td>";
+	foreach($row as $key=>$val) {
+		$myColor=$color;
+		if(preg_match("/^b750/",$val)) {
+			$val="Main Queue";
+			$myColor="orange";
+		} elseif(preg_match("/^u750/",$val)) {
+			$val="Inet Queue";
+			$myColor="yellow";
+		}
+		if($val == 'MixMonitor') {
+			$myColor="lightgreen";
+		}
+		if(($key == 2) && (strlen($val) == 3)) {
+			$myColor="lightblue";
+		}
+		if(($key == 3) && (strlen($val) == 3)) {
+			$myColor="lightblue";
+		}
+		$tbl.="<td bgcolor=\"{$myColor}\">{$val}</td>";
 	}
 	$tbl.="</tr>\n";
 	if($color == 'ffffff') {
@@ -53,7 +75,7 @@ $db->disconnect();
 </head>
 <body>
 <table cellpadding="5" cellspacing="0" border="1">
-<tr><td>CallDate</td><td>Src</td><td>Dst</td><td>Duration</td><td>Channel</td><td>DstChannel</td><td>LastApp</td><td>LastData</td></tr>
+<tr><td>Dir</td><td>CallDate</td><td>Src</td><td>Dst</td><td>Duration</td><td>Channel</td><td>DstChannel</td><td>LastApp</td><td>LastData</td></tr>
 <?php echo $tbl; ?>
 </table>
 <a href="callLog.php">Back</a><br>

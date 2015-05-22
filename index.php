@@ -4,7 +4,17 @@ require_once("db.php");
 $refresh_interval=120;
 
 phpAuth();
-$callLogs="<tr><td colspan=\"6\"><a href=\"callLog.php\">Call Log Files</a></td></tr>\n";
+if(isset($_GET['lastmess'])) {
+	$last=$_GET['lastmess'];
+	if(isset($_GET['showall'])) {
+		$showall="<a href=\"index.php?lastmess={$last}\">Hide Final Messages</td></tr>\n";
+	} else {
+		$showall="<a href=\"index.php?lastmess={$last}&showall=true\">Show All Messages</td></tr>\n";
+	}
+} else {
+	$showall="<a href=\"index.php?showall=true\">Show All Messages</td></tr>\n";
+}
+$callLogs="<tr><td colspan=\"6\"><a href=\"callLog.php\">Call Log Files</a> | {$showall}</td></tr>\n";
 
 $td='';
 $td2='';
@@ -26,7 +36,12 @@ while(($row=$res->fetchRow())==true) {
 
 $sql="SELECT b.message_id,b.message_create,b.status,b.call_type,u.username FROM (SELECT a.message_id,a.message_create,a.status,c.call_type,a.current_owner FROM (SELECT m.call_type_id,m.message_id,m.message_create,s.status,m.current_owner FROM messages AS m LEFT OUTER JOIN status AS s ON m.status_id=s.status_id WHERE m.status_id>0 AND m.status_id < 4 ORDER BY m.status_id ASC,m.message_create ASC) as a LEFT OUTER JOIN call_types AS c ON a.call_type_id=c.call_type_id) as b LEFT OUTER JOIN users AS u ON b.current_owner=u.user_id";
 
-$sql=" SELECT b.message_id,b.message_create,b.status,b.call_type,u.username,b.length FROM (SELECT a.message_id,a.message_create,a.status,c.call_type,a.current_owner,a.length FROM (SELECT m.call_type_id,m.message_id,m.message_create,s.status,m.current_owner,m.length FROM messages AS m LEFT OUTER JOIN status AS s ON m.status_id=s.status_id WHERE m.status_id>0 AND m.status_id < 4 ORDER BY m.status_id ASC,m.message_create ASC) as a LEFT OUTER JOIN call_types AS c ON a.call_type_id=c.call_type_id) as b LEFT OUTER JOIN users AS u ON b.current_owner=u.user_id";
+if(!isset($_GET['showall'])) {
+	$sql=" SELECT b.message_id,b.message_create,b.status,b.call_type,u.username,b.length FROM (SELECT a.message_id,a.message_create,a.status,c.call_type,a.current_owner,a.length FROM (SELECT m.call_type_id,m.message_id,m.message_create,s.status,m.current_owner,m.length FROM messages AS m LEFT OUTER JOIN status AS s ON m.status_id=s.status_id WHERE m.status_id>0 AND m.status_id < 4 ORDER BY m.status_id ASC,m.message_create ASC) as a LEFT OUTER JOIN call_types AS c ON a.call_type_id=c.call_type_id) as b LEFT OUTER JOIN users AS u ON b.current_owner=u.user_id";
+} else {
+	$sql=" SELECT b.message_id,b.message_create,b.status,b.call_type,u.username,b.length FROM (SELECT a.message_id,a.message_create,a.status,c.call_type,a.current_owner,a.length FROM (SELECT m.call_type_id,m.message_id,m.message_create,s.status,m.current_owner,m.length FROM messages AS m LEFT OUTER JOIN status AS s ON m.status_id=s.status_id  ORDER BY m.status_id ASC,m.message_create ASC) as a LEFT OUTER JOIN call_types AS c ON a.call_type_id=c.call_type_id) as b LEFT OUTER JOIN users AS u ON b.current_owner=u.user_id";
+}
+
 
 $res=$db->query($sql);
 while(($row=$res->fetchRow())==true) {
@@ -51,13 +66,19 @@ if(isset($_GET['lastmess']) && ($_GET['lastmess'] < $max)) {
 	$alarm='';
 }
 
+
+if(!isset($_GET['showall'])) {
+	$http_equiv="<meta http-equiv=\"Refresh\" content=\"{$refresh_interval};URL=index.php?lastmess={$max}\">";
+} else {
+	$http_equiv="<meta http-equiv=\"Refresh\" content=\"{$refresh_interval};URL=index.php?lastmess={$max}&showall=true\">";
+}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 <title>Messsages</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta http-equiv="Refresh" content="<?php echo $refresh_interval;?>;URL=index.php?lastmess=<?php echo $max;?>">
+<?php echo $http_equiv; ?>
 <link href="css/normalize.css" rel="stylesheet" type="text/css">
 <link href="css/index.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">

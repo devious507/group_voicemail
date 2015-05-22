@@ -27,9 +27,11 @@ div.unlistened {
 	left: 10px;
 }
 div.listened {
+	overflow: scroll;
 	position: fixed;
 	top: 30px;
 	left: 350px;
+	height: 700px;
 }
 div.classifyAudio {
 	position: fixed;

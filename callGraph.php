@@ -3,8 +3,8 @@
 require_once('cal.php');
 
 $myCal=new paulCalendar();
-$myCal->setBaseName('callLog.php');
-$myCal->setTargetUrl('showCallLogs.php');
+$myCal->setBaseName('callGraph.php');
+$myCal->setTargetUrl('showCallGraph.php');
 $myCal->setCellPadding(5);
 $myCal->setCellSpacing(0);
 $myCal->setBorder(1);
@@ -23,7 +23,6 @@ $ctrl=$myCal->output();
 <title>Date Selector</title>
 </head>
 <body>
-<a href="callGraph.php">Show As Graph</a><br>
 <?php echo $ctrl; ?>
 <br><a href="index.php">Voicemail Monitoring</a><br>
 </body>
