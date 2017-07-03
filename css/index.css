@@ -23,14 +23,17 @@ td.plain {
 
 div.unlistened {
 	position: fixed;
+	overflow: scroll;
 	top: 30px;
 	left: 10px;
+	height: 700px;
+	width: 370px; 
 }
 div.listened {
 	overflow: scroll;
 	position: fixed;
 	top: 30px;
-	left: 350px;
+	left: 380px;
 	height: 700px;
 }
 div.classifyAudio {

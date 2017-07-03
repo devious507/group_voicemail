@@ -29,9 +29,30 @@ if(!isset($_GET['lastmess'])) {
 }
 $sql="SELECT message_id,message_create,length from messages WHERE status_id=0 ORDER BY status_id ASC,message_create ASC";
 $res=$db->query($sql);
+$tdcount=0;
 while(($row=$res->fetchRow())==true) {
+	$msg_id = $row[0];
+	$sql_note = "SELECT note FROM messages_notes WHERE message_id={$msg_id}";
+	$res_note = $db->query($sql_note);
+	$row_note = $res_note->fetchRow();
+	$note = $row_note[0];
+	if(preg_match("/GS Support/",$note)) {
+		$type="GS Support";
+	} elseif(preg_match("/Retail Call/",$note)) {
+		$type="Retail Call";
+	} elseif(preg_match("/Q Internet/",$note)) {
+		$type="Q Internet";
+	} elseif(preg_match("/Q Other Issue/",$note)) {
+		$type="Q Other";
+	} else {
+		$type="UNKNOWN";
+	}
 	$url="<a href=\"workTicket.php?message_id={$row[0]}\">{$row[0]}</a>";
-	$td.="<tr><td>{$url}</td><td>{$row[1]}</td><td>{$row[2]}</td></tr>\n";
+	$date_Time=$row[1];
+	$arr=preg_split("/\./",$date_Time);
+	$row[1]=$arr[0];
+	$td.="<tr><td>{$url}</td><td>{$row[1]}</td><td>{$row[2]}</td><td>{$type}</td></tr>\n";
+	$tdcount++;
 }
 
 $sql="SELECT b.message_id,b.message_create,b.status,b.call_type,u.username FROM (SELECT a.message_id,a.message_create,a.status,c.call_type,a.current_owner FROM (SELECT m.call_type_id,m.message_id,m.message_create,s.status,m.current_owner FROM messages AS m LEFT OUTER JOIN status AS s ON m.status_id=s.status_id WHERE m.status_id>0 AND m.status_id < 4 ORDER BY m.status_id ASC,m.message_create ASC) as a LEFT OUTER JOIN call_types AS c ON a.call_type_id=c.call_type_id) as b LEFT OUTER JOIN users AS u ON b.current_owner=u.user_id";
@@ -44,6 +65,7 @@ if(!isset($_GET['showall'])) {
 
 
 $res=$db->query($sql);
+$td2count=0;
 while(($row=$res->fetchRow())==true) {
 	$url="<a href=\"workTicket.php?message_id={$row[0]}\">{$row[0]}</a>";
 	if($row[2] == "CLOSED") {
@@ -54,6 +76,7 @@ while(($row=$res->fetchRow())==true) {
 		$myClass="plain";
 	}
 	$td2.="<tr><td class=\"{$myClass}\">{$url}</td><td class=\"{$myClass}\">{$row[1]}</td><td class=\"{$myClass}\">{$row[2]}</td><td class=\"{$myClass}\">{$row[3]}</td><td class=\"{$myClass}\">{$row[4]}</td><td class=\"{$myClass}\">{$row[5]}</td></tr>\n";
+	$td2count++;
 }
 
 $db->disconnect();
@@ -100,16 +123,16 @@ setInterval(function () {
 </div>
 
 <div class="unlistened">
-<table cellpadding="5" cellspacing="0" border="1">
-<tr><td colspan="3" align="center">Newly Arrived</td></tr>
-<tr><td>Msg #</td><td>Arrived</td><td>Len</td></tr>
+<table cellpadding="5" cellspacing="0" border="1" width="100%">
+<tr><td colspan="4" align="center">Newly Arrived (<?php print $tdcount; ?>)</td></tr>
+<tr><td>Msg #</td><td>Arrived</td><td>Len</td><td>Type</td></tr>
 <?php echo $td; ?>
 </table>
 </div>
 
 <div class="listened">
 <table cellpadding="5" cellspacing="0" border="1">
-<tr><td colspan="6" align="center">Initial Processing Done</td></tr>
+<tr><td colspan="6" align="center">Initial Processing Done (<?php print $td2count ?>)</td></tr>
 <tr><td>Msg #</td><td>Arrived</td><td>Status</td><td>Call Type</td><td>Owner</td><td>Len</td></tr>
 <?php echo $td2; ?>
 <?php echo $callLogs; ?>

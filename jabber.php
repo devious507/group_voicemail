@@ -7,10 +7,11 @@ function MailMessage() {
 		$dir="voicemail";
 	}
 	$now=date("H:i:s m/d/Y");
-	$mailto="darla@visionsystems.tv";
+	$mailto=array("darla@visionsystems.tv","benv@visionsystems.tv","taylorb@visionsystems.tv","daveb@visionsystems.tv");
 	$subject="New Voicemail Message Arrived at {$now} see http://dashboard.visionsystems.tv/{$dir}";
-	mail($mailto,$subject,$subject);
-
+	foreach($mailto as $m) {
+		mail($m,$subject,$subject);
+	}
 }
 
 function JabberMessage() {
